@@ -38,6 +38,8 @@ router.use(authMiddleware);
  *         schema:
  *           type: integer
  *         description: Number of users to skip. Defaults to 0 if not provided.
+ *     security:
+ *       - bearerAuth: []  # Specify that the Bearer token is required
  *     responses:
  *       200:
  *         description: A list of users retrieved successfully.
@@ -57,19 +59,24 @@ router.use(authMiddleware);
  *                   userType:
  *                     type: string
  *                     description: Type of the user (admin or user).
- *       400:
- *         description: Invalid user type provided.
- *         content:
- *           application/json:
- *             schema:
- *               type: string
- *       500:
- *         description: Server error occurred while retrieving users.
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:  # Define the security scheme for Bearer token
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT  # Indicate that the token is in JWT format
  */
 router.get("/", getAllUsers);
 
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:  # Define the security scheme for Bearer token
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT  # Indicate that the token is in JWT format
+ *
  * /api/users/create:
  *   post:
  *     summary: Create a new user
@@ -94,6 +101,8 @@ router.get("/", getAllUsers);
  *               role:
  *                 type: string
  *                 description: The role of the user (optional).
+ *     security:
+ *       - bearerAuth: []  # Specify that the Bearer token is required
  *     responses:
  *       201:
  *         description: User created successfully.
@@ -127,6 +136,13 @@ router.route("/create").post(addUser);
 
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:  # Define the security scheme for Bearer token
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT  # Indicate that the token is in JWT format
+ *
  * /api/users/{id}:
  *   get:
  *     summary: Retrieve a single user by ID
@@ -138,6 +154,8 @@ router.route("/create").post(addUser);
  *         description: The ID of the user to retrieve.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []  # Specify that the Bearer token is required
  *     responses:
  *       200:
  *         description: User retrieved successfully.
@@ -199,6 +217,8 @@ router.route("/create").post(addUser);
  *               role:
  *                 type: string
  *                 description: The new role of the user (optional).
+ *     security:
+ *       - bearerAuth: []  # Specify that the Bearer token is required
  *     responses:
  *       200:
  *         description: User updated successfully.
@@ -223,6 +243,8 @@ router.route("/create").post(addUser);
  *         description: The ID of the user to remove.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []  # Specify that the Bearer token is required
  *     responses:
  *       200:
  *         description: User removed successfully.

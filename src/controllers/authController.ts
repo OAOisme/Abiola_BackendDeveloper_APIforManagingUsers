@@ -26,6 +26,12 @@ export const loginAdmin = async (
         password: password,
         role: "admin",
       });
+      if (!newUser) {
+        res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .send("Internal Server Error");
+        return;
+      }
       const token = jwt.sign(
         { id: newUser._id, role: newUser.role },
         config.jwtSecret,
@@ -33,7 +39,7 @@ export const loginAdmin = async (
           expiresIn: "1h",
         }
       );
-      res.status(StatusCodes.OK).send({ Token: token });
+      res.status(StatusCodes.CREATED).send({ Token: token });
       return;
     }
     res.status(StatusCodes.UNAUTHORIZED).send("Unauthorized");

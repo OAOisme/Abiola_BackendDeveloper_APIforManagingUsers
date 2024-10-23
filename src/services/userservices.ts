@@ -27,7 +27,7 @@ export const addUserservice = async (payload: userPayload) => {
   try {
     return await User.create(payload);
   } catch (error) {
-    throw new Error("Invalid input data");
+    return null;
   }
 };
 

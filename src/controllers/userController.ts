@@ -48,6 +48,10 @@ export const addUser = async (
   }
 
   const newUser = await addUserservice({ name, email, password, role });
+  if (!newUser) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Internal Server Error");
+    return;
+  }
 
   res.status(StatusCodes.CREATED).send(newUser);
 };
