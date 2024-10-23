@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { getAllUsertypeservice } from "../services/userservices";
 import {
   addUser,
   getAllUsers,
@@ -7,8 +6,11 @@ import {
   removeUser,
   updateUser,
 } from "../controllers/userController";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 const router = Router();
+
+router.use(authMiddleware);
 
 /**
  * @swagger

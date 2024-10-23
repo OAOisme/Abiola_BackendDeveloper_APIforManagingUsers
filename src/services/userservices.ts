@@ -7,6 +7,10 @@ type userPayload = {
   role?: "admin" | "user";
 };
 
+export const noOfUserservice = async (role?: string) => {
+  return await User.countDocuments((role && { role }) || {});
+};
+
 export const getAllUsertypeservice = async (limit: number, skip: number) => {
   return await User.find().skip(skip).limit(limit);
 };

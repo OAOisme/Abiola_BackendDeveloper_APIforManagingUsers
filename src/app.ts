@@ -1,10 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
 import { connectDB } from "./utils/connectDB";
 import { config } from "./config";
-import userRoutes from "./routes/userRoutes";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 
+import userRoutes from "./routes/userRoutes";
+import authRoutes from "./routes/authRoutes";
 const app = express();
 
 const options = {
@@ -13,7 +14,7 @@ const options = {
     info: {
       title: "Users API",
       version: "1.0.0",
-      description: "A simple",
+      description: "A simple user management API",
     },
     servers: [
       {
@@ -31,6 +32,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use(express.json());
 
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(new Error(`This path ${req.originalUrl} isn't on this server!`));
