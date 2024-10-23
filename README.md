@@ -14,7 +14,7 @@ This project can be set up and run using Docker Compose. Follow the instructions
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/OAOisme/your-repo.git
+   git clone https://github.com/OAOisme/Abiola_BackendDeveloper_APIforManagingUsers.git
    cd your-repo
    ```
 
@@ -30,7 +30,7 @@ This project can be set up and run using Docker Compose. Follow the instructions
 
 4. Setup Admin Account
 
-   - On first login, any email and password combination will create the admin account
+   - On first setup, any email and password combination used to login will create the admin account
 
 ## Usage
 
