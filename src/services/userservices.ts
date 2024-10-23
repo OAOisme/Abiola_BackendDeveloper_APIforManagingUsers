@@ -20,7 +20,11 @@ export const getAllUserservice = async (limit: number, skip: number) => {
 };
 
 export const addUserservice = async (payload: userPayload) => {
-  return await User.create(payload);
+  try {
+    return await User.create(payload);
+  } catch (error) {
+    throw new Error("Invalid input data");
+  }
 };
 
 export const removeUserservice = async (id: string) => {

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import {
   addUserservice,
   getAllAdminservice,
@@ -36,10 +36,14 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-export const addUser = async (req: Request, res: Response) => {
+export const addUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { name, email, password, role } = req.body;
   if (!name || !email || !password) {
-    res.status(StatusCodes.BAD_REQUEST).send("Missing fields");
+    res.status(StatusCodes.BAD_REQUEST).send("Missing required fields");
     return;
   }
 
