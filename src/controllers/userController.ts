@@ -5,10 +5,12 @@ import {
   getAllUserservice,
   getAllUsertypeservice,
   getOneUserservice,
+  getUserbyEmailservice,
   removeUserservice,
   updateUserservice,
 } from "../services/userservices";
 import { StatusCodes } from "http-status-codes";
+import { isStrongPassword, isValidEmail } from "../utils/dataChecker";
 
 export const getAllUsers = async (req: Request, res: Response) => {
   let limit,
@@ -42,12 +44,38 @@ export const addUser = async (
   next: NextFunction
 ) => {
   const { name, email, password, role } = req.body;
+
+  if (!isValidEmail(email)) {
+    res.status(StatusCodes.BAD_REQUEST).send("Invalid email");
+    return;
+  }
+
+  if (!isStrongPassword(password)) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .send(
+        "Password should be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character"
+      );
+    return;
+  }
+
   if (!name || !email || !password) {
     res.status(StatusCodes.BAD_REQUEST).send("Missing required fields");
     return;
   }
 
+  if (role !== "admin" && role !== "user") {
+    res.status(StatusCodes.BAD_REQUEST).send("Invalid role");
+    return;
+  }
+
+  if (await getUserbyEmailservice(email)) {
+    res.status(StatusCodes.BAD_REQUEST).send("User already exists");
+    return;
+  }
+
   const newUser = await addUserservice({ name, email, password, role });
+
   if (!newUser) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Internal Server Error");
     return;

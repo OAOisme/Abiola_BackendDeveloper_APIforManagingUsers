@@ -6,6 +6,7 @@ import swaggerJsDoc from "swagger-jsdoc";
 
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
+import { StatusCodes } from "http-status-codes";
 const app = express();
 
 const options = {
@@ -35,7 +36,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-  next(new Error(`This path ${req.originalUrl} isn't on this server!`));
+  res.status(StatusCodes.NOT_FOUND).send("This endpoint does not exist");
 });
 
 const start = async () => {

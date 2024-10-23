@@ -27,6 +27,7 @@ export const addUserservice = async (payload: userPayload) => {
   try {
     return await User.create(payload);
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -41,4 +42,8 @@ export const updateUserservice = async (id: string, payload: userPayload) => {
 
 export const getOneUserservice = async (id: string) => {
   return await User.findById(id);
+};
+
+export const getUserbyEmailservice = async (email: string) => {
+  return await User.findOne({ email });
 };

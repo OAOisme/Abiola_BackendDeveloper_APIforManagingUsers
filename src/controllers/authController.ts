@@ -5,6 +5,7 @@ import bycrypt from "bcrypt";
 import { config } from "../config";
 import jwt from "jsonwebtoken";
 import { addUserservice, noOfUserservice } from "../services/userservices";
+import { isStrongPassword, isValidEmail } from "../utils/dataChecker";
 
 export const loginAdmin = async (
   req: Request,
@@ -20,6 +21,20 @@ export const loginAdmin = async (
   const admin = await findAdminService(email);
   if (!admin) {
     if (!(await noOfUserservice())) {
+      if (!isValidEmail(email)) {
+        res.status(StatusCodes.BAD_REQUEST).send("Invalid email");
+        return;
+      }
+
+      if (!isStrongPassword(password)) {
+        res
+          .status(StatusCodes.BAD_REQUEST)
+          .send(
+            "Password should be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character"
+          );
+        return;
+      }
+
       const newUser = await addUserservice({
         name: "admin",
         email: email,
