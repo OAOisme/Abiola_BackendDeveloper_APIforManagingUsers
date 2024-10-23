@@ -1,7 +1,5 @@
-import { config } from "../config";
-
 const mongoose = require("mongoose");
 
-export const connectDB = async () => {
-  mongoose.connect(config.mongoURI);
+export const connectDB = async (URL: any) => {
+  mongoose.connect(URL);
 };
