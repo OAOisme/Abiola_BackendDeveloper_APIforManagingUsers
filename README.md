@@ -1,5 +1,3 @@
-# Project Name
-
 ## Overview
 
 This project can be set up and run using Docker Compose. Follow the instructions below to get started.
